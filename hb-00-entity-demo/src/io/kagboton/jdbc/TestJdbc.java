@@ -1,4 +1,4 @@
-package com.kagboton.jdbc;
+package io.kagboton.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

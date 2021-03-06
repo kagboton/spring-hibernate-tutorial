@@ -1,4 +1,4 @@
-package com.kagboton.hibernate.demo.entity;
+package io.kagboton.hibernate.demo.entity.entity;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

@@ -1,10 +1,8 @@
-package com.kagboton.hibernate.demo.entity;
+package io.kagboton.hibernate.demo.entity.entity;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-
-import java.util.List;
 
 public class UpdateStudentDemo {
 
