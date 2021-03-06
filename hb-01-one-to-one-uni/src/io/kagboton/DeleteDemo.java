@@ -6,9 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import java.util.List;
-
-public class CreateDemo {
+public class DeleteDemo {
 
     public static void main(String[] args) {
 
@@ -23,21 +21,24 @@ public class CreateDemo {
         Session session = sessionFactory.getCurrentSession();
 
         try{
-            // create the objects
-            Instructor instructor = new Instructor("Rudy", "Gulliani", "rudy@mail.com");
-            InstructorDetail instructorDetail = new InstructorDetail("rudyChannel", "Do research");
-
-            // associate the objects
-            instructor.setInstructorDetail(instructorDetail);
-
             // begin the transaction
             session.beginTransaction();
 
-            // save instructor
-            session.save(instructor);
+            // get instructor by primary key / id
+            int theId = 1;
+            Instructor instructor = session.get(Instructor.class, theId);
+
+            System.out.println("Found instructor: " + instructor);
+
+            // delete the instructor
+            if(instructor != null){
+                System.out.println("Deleting: " + instructor);
+                // the associate instructor detail will be deleted also because of Cascade.ALL
+                session.delete(instructor);
+            }
 
             // commit the transaction
-            System.out.println("Saving instructor: "+ instructor);
+            System.out.println("Instructor deleted");
             session.getTransaction().commit();
 
             System.out.println("Done!");
