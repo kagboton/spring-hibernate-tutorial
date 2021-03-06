@@ -6,7 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class GetInstructorDetailDemo {
+public class DeleteInstructorDetailDemo {
 
     public static void main(String[] args) {
 
@@ -34,6 +34,10 @@ public class GetInstructorDetailDemo {
 
             // print associate instructor
             System.out.println("Associate instructor: " + instructorDetail.getInstructor());
+
+            // delete instructor detail
+            System.out.println("Deleting instructorDetail: " + instructorDetail);
+            session.delete(instructorDetail);
 
             // commit the transaction
             session.getTransaction().commit();
