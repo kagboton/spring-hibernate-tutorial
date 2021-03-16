@@ -6,8 +6,10 @@ import io.kagboton.hibernate.demo.entity.InstructorDetail;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
-public class EagerLazyDemo {
+
+public class FetchJoinDemo {
 
     public static void main(String[] args) {
 
@@ -27,16 +29,25 @@ public class EagerLazyDemo {
             // begin the transaction
             session.beginTransaction();
 
+            // lazy loading option 2 : hibernate query with HQL
+
             // get the instructor from db
             int theId = 3;
-            Instructor theInstructor = session.get(Instructor.class, theId);
+
+            Query<Instructor> query =
+                    session.createQuery("select i from Instructor i " +
+                                    "JOIN FETCH i.courses " +
+                                    "WHERE i.id=:theInstructorId",
+                            Instructor.class);
+
+            // set parameter on query
+            query.setParameter("theInstructorId", theId);
+
+            // execute query and get instructor
+
+            Instructor theInstructor = query.getSingleResult();
 
             System.out.println("io.kagboton: Instructor: "+ theInstructor);
-
-            // lazy loading option 1
-
-            // call of courses getter to have courses in the memory
-            System.out.println("io.kagobton : Courses :" + theInstructor.getCourses());
 
             session.getTransaction().commit();
 
@@ -45,9 +56,7 @@ public class EagerLazyDemo {
 
             System.out.println("io.kagboton : Session is now close");
 
-            // code below should fail since courses are lazy loaded - but we call the getter to have the courses in the memory
-
-            //get course for the instructor
+            //get course for the instructor using HQL query
             System.out.println("io.kagobton : Courses :" + theInstructor.getCourses());
 
             System.out.println("Done!");
